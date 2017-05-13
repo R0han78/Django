@@ -1,0 +1,7 @@
+ <img src="#">
+ <h1>Here Are All The Songs of {{album.artist}}</h1>
+  <ul>
+   {% for song in album.song_set.all %}
+    <li><a href="/music/{{ song.song_title }}/">{{ song.song_title }}</a></li>
+    {% endfor %}
+</ul>
