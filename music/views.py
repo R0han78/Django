@@ -1,69 +1,19 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.shortcuts import render
-
-from django.http import HttpResponse,Http404
+from django.views import generic
 from .models import Album
 
-# Create your views here.
+class IndexView(generic.ListView):
+    template_name = 'music/index.html'
+    context_object_name = 'all_albums' #to change name object_list to all_albums
+    def get_queryset(self):
+        return Album.objects.all()
 
-#type 1
-#def index(request):
-#    all_albums = Album.objects.all()
-#    html=''
-#    for album in all_albums:
-#        url = '/music/'+str(album.id)+'/'
-#        html+='<a href="'+url+'">'+album.album_title+'</a><br>'
-#    return HttpResponse(html)
+class DetailView(generic.DetailView):
+    model = Album
+    template_name = 'music/details.html'
 
+    
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
 
-#type 2
-#from django.template import loader
-#def index(request):
-#    all_albums = Album.objects.all()
-#    template = loader.get_template('music/index.html')
-#    context = {
-#        'all_albums' : all_albums,
-#    }
-#    return HttpResponse(template.render(context,request))
-
-
-#type3
-from django.shortcuts import render
-def index(request):
-    all_albums = Album.objects.all()
-    context = {
-        'all_albums' : all_albums,
-    }
-    return render(request,'music/index.html',context)
-
-
-
-
-
-#type 1
-#def detail(request,album_id):
-#    try:
-#        album = Album.objects.get(pk=album_id)
-#    except Album.DoesNotExist:
-#        raise Http404("Album Not Present")
-#    context = {
-#        'album' : album,
-#    }
-#    return render(request,'music/details.html',context)
-#
-
-#type 2
-from django.shortcuts import get_object_or_404
-def detail(request,album_id):
-    album = get_object_or_404(Album,pk=album_id)
-    context = {
-        'album' : album,
-    }
-    return render(request,'music/details.html',context)
-
-
-
-
-
+class AlbumCreate(CreateView):
+    model = Album
+    fields=['artist','album_title']
