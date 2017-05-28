@@ -21,5 +21,7 @@
                 {{song.song_title}}
             </label><br>        
         {% endfor %}
-
+<div >
+    <a href="{% url 'music:album-delete' album.id %}"><h3>Delete Album </h3></a>
+</div>
 {% endblock %}

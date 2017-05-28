@@ -17,3 +17,14 @@ from django.views.generic.edit import CreateView,UpdateView,DeleteView
 class AlbumCreate(CreateView):
     model = Album
     fields=['artist','album_title']
+
+    
+class AlbumUpdate(UpdateView):
+    model = Album
+    fields=['artist','album_title']
+    
+    
+from django.core.urlresolvers import reverse_lazy
+class AlbumDelete(DeleteView):
+    model = Album
+    success_url = reverse_lazy('music:index')
